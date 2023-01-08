@@ -114,6 +114,9 @@ class PlayState extends MusicBeatState
 
 	var talking:Bool = true;
 	var songScore:Int = 0;
+	var songMisses:Int = 0;
+	var comboBreaks:Int = 0;
+	var blueballed:Int = 0;
 	var scoreTxt:FlxText;
 
 	public static var campaignScore:Int = 0;
@@ -736,6 +739,7 @@ class PlayState extends MusicBeatState
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width - 190, healthBarBG.y + 30, 0, "", 20);
 		scoreTxt.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT);
 		scoreTxt.scrollFactor.set();
+		scoreTxt.screenCenter(X);
 		add(scoreTxt);
 
 		iconP1 = new HealthIcon(SONG.player1, true);
@@ -1364,7 +1368,7 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		scoreTxt.text = "Score:" + songScore;
+		scoreTxt.text = "Score:" + songScore + " Misses:" + songMisses + " Combo Breaks:" + comboBreaks + " Combo:" + combo;
 
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -1671,15 +1675,16 @@ class PlayState extends MusicBeatState
 					daNote.destroy();
 				}
 
-				// WIP interpolation shit? Need to fix the pause issue
-				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
-
 				if (daNote.y < -daNote.height)
 				{
 					if (daNote.tooLate || !daNote.wasGoodHit)
 					{
 						health -= 0.0475;
+						songMisses++;
+						if (combo > 9)
+							comboBreaks++;
 						vocals.volume = 0;
+						combo = 0;
 					}
 
 					daNote.active = false;
@@ -1733,7 +1738,6 @@ class PlayState extends MusicBeatState
 
 				if (SONG.validScore)
 				{
-					NGio.unlockMedal(60961);
 					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 				}
 
@@ -1851,6 +1855,7 @@ class PlayState extends MusicBeatState
 		comboSpr.velocity.y -= 150;
 
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
+		add(comboSpr);
 		add(rating);
 
 		if (!curStage.startsWith('school'))
@@ -1910,6 +1915,9 @@ class PlayState extends MusicBeatState
 			});
 
 			daLoop++;
+
+			if (combo > 9)
+				add(comboSpr);
 		}
 		/* 
 			trace(combo);
@@ -2140,9 +2148,12 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sad');
 			}
-			combo = 0;
 
 			songScore -= 10;
+			songMisses++;
+			if (combo > 9)
+				comboBreaks++;
+			combo = 0;
 
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
