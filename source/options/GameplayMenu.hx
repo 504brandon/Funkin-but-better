@@ -5,7 +5,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.FlxG;
 
 class GameplayMenu extends MusicBeatState {
-	var menuItems:Array<String> = ['DownScroll', 'Ghost Tapping'];
+	var menuItems:Array<String> = ['DownScroll', 'Ghost Tapping', 'darkmode'];
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var curSelected:Int = 0;
 
@@ -61,6 +61,12 @@ class GameplayMenu extends MusicBeatState {
 						OptionVars.downscroll = true;
 					else
 						OptionVars.downscroll = false;
+
+				case "darkmode":
+					if (!OptionVars.darkmode)
+						OptionVars.darkmode = true;
+					else
+						OptionVars.darkmode = false;
 				default:
 					trace('you got a null option');
 			}

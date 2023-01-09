@@ -1,5 +1,6 @@
 package;
 
+import options.OptionVars;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -80,7 +81,12 @@ class FreeplayState extends MusicBeatState {
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite;
+
+		if (OptionVars.darkmode)
+		bg = new FlxSprite().loadGraphic(Paths.image('menuDarkMode'));
+		else
+		bg = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();

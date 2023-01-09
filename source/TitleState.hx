@@ -53,6 +53,7 @@ class TitleState extends MusicBeatState {
 		super.create();
 
 		FlxG.save.bind('funkin-better', '504brandon');
+		options.OptionsMenu.loadsettings();
 		
 
 		Highscore.load();

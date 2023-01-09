@@ -82,12 +82,12 @@ class OptionsMenu extends MusicBeatState {
 		}
 	}
 
-    public static function savesettings() {
-        FlxG.save.data.gt = OptionVars.ghosttapping;
-        FlxG.save.data.ds = OptionVars.downscroll;
-
-	    FlxG.save.flush();
-    }
+	public static function savesettings() {
+		FlxG.save.data.gt = OptionVars.ghosttapping;
+		FlxG.save.data.ds = OptionVars.downscroll;
+		FlxG.save.data.dm = OptionVars.darkmode;
+		FlxG.save.flush();
+	}
 
 	public static function loadsettings() {
 		if (FlxG.save.data.gt != OptionVars.ghosttapping && FlxG.save.data.gt != null)
@@ -95,8 +95,10 @@ class OptionsMenu extends MusicBeatState {
 
 		if (FlxG.save.data.ds != OptionVars.downscroll && FlxG.save.data.gs != null)
 			OptionVars.downscroll = FlxG.save.data.OptionVars.ds;
-        
 
-        trace('settings loaded secsessfully');
+        if (FlxG.save.data.dm != OptionVars.darkmode && FlxG.save.data.dm != null)
+			OptionVars.darkmode = FlxG.save.data.OptionVars.dm;
+
+		trace('settings loaded secsessfully');
 	}
 }
