@@ -9,9 +9,8 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
-/**
-	*DEBUG MODE
- */
+using StringTools;
+
 class AnimationDebug extends FlxState
 {
 	var bf:Boyfriend;
@@ -39,7 +38,7 @@ class AnimationDebug extends FlxState
 		gridBG.scrollFactor.set(0.5, 0.5);
 		add(gridBG);
 
-		if (daAnim == 'bf')
+		if (daAnim.toLowerCase().contains('bf'))
 			isDad = false;
 
 		if (isDad)

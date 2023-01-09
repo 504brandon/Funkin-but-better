@@ -73,8 +73,7 @@ class FreeplayState extends MusicBeatState {
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
 
-		for (i in 0...songs.length)
-		{
+		for (i in 0...songs.length) {
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i].songName, true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
@@ -141,14 +140,12 @@ class FreeplayState extends MusicBeatState {
 		super.create();
 	}
 
-	override function update(elapsed:Float)
-	{
+	override function update(elapsed:Float) {
 		super.update(elapsed);
 		sinceLastSelect = Math.min(sinceLastSelect + elapsed * 2, 1);
 		bg.color = FlxColor.interpolate(lastColor, songs[curSelected].color, sinceLastSelect);
 
-		if (FlxG.sound.music.volume < 0.7)
-		{
+		if (FlxG.sound.music.volume < 0.7) {
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
@@ -163,12 +160,10 @@ class FreeplayState extends MusicBeatState {
 		var downP = controls.DOWN_P;
 		var accepted = controls.ACCEPT;
 
-		if (upP)
-		{
+		if (upP) {
 			changeSelection(-1);
 		}
-		if (downP)
-		{
+		if (downP) {
 			changeSelection(1);
 		}
 
@@ -177,13 +172,11 @@ class FreeplayState extends MusicBeatState {
 		if (controls.RIGHT_P)
 			changeDiff(1);
 
-		if (controls.BACK)
-		{
+		if (controls.BACK) {
 			FlxG.switchState(new MainMenuState());
 		}
 
-		if (accepted)
-		{
+		if (accepted) {
 			CoolUtil.diffArray = songs[curSelected].diffs;
 
 			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
@@ -205,8 +198,7 @@ class FreeplayState extends MusicBeatState {
 		diffText.text = songs[curSelected].diffs[curDifficulty].toUpperCase();
 	}
 
-	function changeSelection(change:Int = 0)
-	{
+	function changeSelection(change:Int = 0) {
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		lastColor = bg.color;
