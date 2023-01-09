@@ -68,8 +68,6 @@ class FreeplayState extends MusicBeatState {
 
 		// LOAD CHARACTERS
 
-		var bg:FlxSprite;
-
 		if (OptionVars.darkmode)
 		bg = new FlxSprite().loadGraphic(Paths.image('menuDarkMode'));
 		else
