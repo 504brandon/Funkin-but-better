@@ -3,31 +3,34 @@ package;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
 
+using StringTools;
+
 class MenuCharacter extends FlxSprite
 {
-	public var character:String;
+	public var character:String = "hubba-dubba-bubble-tape";
 
 	public function new(x:Float, character:String = 'bf')
 	{
 		super(x);
+		changeChar(character);
+	}
 
-		this.character = character;
+	public function changeChar(char:String = "bf") {
+		if (char == character) return;
+		character = char;
+		if (character == "<NONE>") {
+			visible = false;
+			return;
+		}
+		visible = true;
+		frames = Paths.getSparrowAtlas('storymenu/characters/$character');
+		animation.addByPrefix('idle', "idle", 24);
+		animation.addByPrefix("confirm", 'confirm', 24, false);
 
-		var tex = Paths.getSparrowAtlas('campaign_menu_UI_characters');
-		frames = tex;
-
-		animation.addByPrefix('bf', "BF idle dance white", 24);
-		animation.addByPrefix('bfConfirm', 'BF HEY!!', 24, false);
-		animation.addByPrefix('gf', "GF Dancing Beat WHITE", 24);
-		animation.addByPrefix('dad', "Dad idle dance BLACK LINE", 24);
-		animation.addByPrefix('spooky', "spooky dance idle BLACK LINES", 24);
-		animation.addByPrefix('pico', "Pico Idle Dance", 24);
-		animation.addByPrefix('mom', "Mom Idle BLACK LINES", 24);
-		animation.addByPrefix('parents-christmas', "Parent Christmas Idle", 24);
-		animation.addByPrefix('senpai', "SENPAI idle Black Lines", 24);
-		// Parent Christmas Idle
-
-		animation.play(character);
-		updateHitbox();
+		animation.play("idle");
+		var data:Array<String> = CoolUtil.coolTextFile('assets/images/storymenu/characters/$character-data.txt');
+		offset.set(100 + Std.parseFloat(data[0].trim()), 100 + Std.parseFloat(data[1].trim()));
+		setGraphicSize(Std.int(frameWidth * Std.parseFloat(data[2].trim())));
+		flipX = (data[3].trim() == "true");
 	}
 }
