@@ -48,13 +48,7 @@ class MainMenuState extends MusicBeatState {
 
 		persistentUpdate = persistentDraw = true;
 
-		var bg:FlxSprite;
-
-		if (OptionVars.darkmode)
-		bg = new FlxSprite(-80).loadGraphic(Paths.image('menuDarkMode'));
-		else{
-		bg = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
-		}
+		var bg:FlxSprite = new FlxSprite(-80, 0, Paths.image((OptionVars.darkmode) ? "menuDarkMode" : "menuBG"));
 		bg.scrollFactor.x = 0;
 		bg.scrollFactor.y = 0.18;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -66,7 +60,7 @@ class MainMenuState extends MusicBeatState {
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		magenta = new FlxSprite(-80, 0, Paths.image((OptionVars.darkmode) ? "menuDarkMode" : "menuDesat"));
 		magenta.scrollFactor.x = 0;
 		magenta.scrollFactor.y = 0.18;
 		magenta.setGraphicSize(Std.int(magenta.width * 1.1));
@@ -143,7 +137,6 @@ class MainMenuState extends MusicBeatState {
 					selectedSomethin = true;
 					FlxG.sound.play(Paths.sound('confirmMenu'));
 
-				if (!OptionVars.darkmode)
 					FlxFlicker.flicker(magenta, 1.1, 0.15, false);
 
 					menuItems.forEach(function(spr:FlxSprite) {

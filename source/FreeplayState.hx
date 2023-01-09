@@ -68,10 +68,7 @@ class FreeplayState extends MusicBeatState {
 
 		// LOAD CHARACTERS
 
-		if (OptionVars.darkmode)
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDarkMode'));
-		else
-		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		bg = new FlxSprite(0, 0, Paths.image((OptionVars.darkmode) ? "menuDarkMode" : "menuDesat"));
 		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
@@ -94,7 +91,6 @@ class FreeplayState extends MusicBeatState {
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 			// songText.screenCenter(X);
 		}
-		if (!OptionVars.darkmode)
 		bg.color = songs[0].color;
 
 		scoreText = new FlxText(FlxG.width * 0.7, 5, 0, "", 32);
@@ -148,7 +144,6 @@ class FreeplayState extends MusicBeatState {
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 		sinceLastSelect = Math.min(sinceLastSelect + elapsed * 2, 1);
-		if (!OptionVars.darkmode)
 		bg.color = FlxColor.interpolate(lastColor, songs[curSelected].color, sinceLastSelect);
 
 		if (FlxG.sound.music.volume < 0.7) {

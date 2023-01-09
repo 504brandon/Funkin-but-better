@@ -90,14 +90,14 @@ class OptionsMenu extends MusicBeatState {
 	}
 
 	public static function loadsettings() {
-		if (FlxG.save.data.gt != OptionVars.ghosttapping && FlxG.save.data.gt != null)
-			OptionVars.ghosttapping = FlxG.save.data.OptionVars.ghosttapping;
+		if (FlxG.save.data.gt != null && FlxG.save.data.gt != OptionVars.ghosttapping)
+			OptionVars.ghosttapping = FlxG.save.data.ghosttapping;
 
-		if (FlxG.save.data.ds != OptionVars.downscroll && FlxG.save.data.gs != null)
-			OptionVars.downscroll = FlxG.save.data.OptionVars.ds;
+		if (FlxG.save.data.ds != null && FlxG.save.data.ds != OptionVars.downscroll)
+			OptionVars.downscroll = FlxG.save.data.ds;
 
-        if (FlxG.save.data.dm != OptionVars.darkmode && FlxG.save.data.dm != null)
-			OptionVars.darkmode = FlxG.save.data.OptionVars.dm;
+        if (FlxG.save.data.dm != null && FlxG.save.data.dm != OptionVars.darkmode)
+			OptionVars.darkmode = FlxG.save.data.dm;
 
 		trace('settings loaded secsessfully');
 	}
