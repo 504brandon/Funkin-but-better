@@ -1,37 +1,33 @@
 package;
 
+import flixel.util.FlxColor;
 import lime.utils.Assets;
 
 using StringTools;
 
 class CoolUtil
 {
-	public static var difficultyArray:Array<String> = ['EASY', "NORMAL", "HARD"];
+	public static var diffArray:Array<String> = ["easy", "normal", "hard"];
 
 	public static function difficultyString():String
-	{
-		return difficultyArray[PlayState.storyDifficulty];
-	}
+		return diffArray[PlayState.storyDifficulty].toUpperCase();
 
 	public static function coolTextFile(path:String):Array<String>
-	{
-		var daList:Array<String> = Assets.getText(path).trim().split('\n');
+		return [for (line in Assets.getText(path).trim().split('\n')) line.trim()];
 
-		for (i in 0...daList.length)
-		{
-			daList[i] = daList[i].trim();
-		}
-
-		return daList;
-	}
+	public static function coolStringFile(path:String):Array<String>
+		return [for (line in path.trim().split('\n')) line.trim()];
 
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
-	{
-		var dumbArray:Array<Int> = [];
-		for (i in min...max)
-		{
-			dumbArray.push(i);
+		return [for (i in min...max) i];
+
+	public static function stringColor(color:String) {
+		if (color.contains(",")) {
+			var rgbArray:Array<Int> = [];
+			for (colorNum in color.split(','))
+				rgbArray.push(Std.parseInt(colorNum.trim()));
+			return FlxColor.fromRGB(rgbArray[0], rgbArray[1], rgbArray[2]);
 		}
-		return dumbArray;
+		return (color.startsWith("#") || color.startsWith("0x")) ? FlxColor.fromString(color) : FlxColor.fromString("#" + color);
 	}
 }

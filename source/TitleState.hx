@@ -46,6 +46,24 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if polymod
+		polymod.Polymod.init({
+			modRoot: "mods",
+			dirs: CoolUtil.coolStringFile(sys.io.File.getContent('./mods/modList.txt')),
+			//errorCallback: (e) -> {trace(e.message);},
+			frameworkParams: {assetLibraryPaths: [ //All my homies hate libraries
+				"songs" => "assets/songs",
+				"shared" => "assets/shared",
+				"tutorial" => "assets/tutorial",
+				"week1" => "assets/week1",
+				"week2" => "assets/week2",
+				"week3" => "assets/week3",
+				"week4" => "assets/week4",
+				"week5" => "assets/week5",
+				"week6" => "assets/week6",
+			]}
+		});
+		#end
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
@@ -58,8 +76,7 @@ class TitleState extends MusicBeatState
 
 		Highscore.load();
 
-		if (FlxG.save.data.weekUnlocked != null)
-		{
+		/*if (FlxG.save.data.weekUnlocked != null) {
 			// FIX LATER!!!
 			// WEEK UNLOCK PROGRESSION!!
 			// StoryMenuState.weekUnlocked = FlxG.save.data.weekUnlocked;
@@ -70,7 +87,7 @@ class TitleState extends MusicBeatState
 			// QUICK PATCH OOPS!
 			if (!StoryMenuState.weekUnlocked[0])
 				StoryMenuState.weekUnlocked[0] = true;
-		}
+		}*/
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
